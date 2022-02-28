@@ -1,0 +1,34 @@
+<h1>Issues</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Author</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (viewData?.snippets?.length) { %>
+      <% for (const snippet of viewData.snippets) { %>
+        <tr>
+          <td class="issue-author-table">
+            <%= snippet.author %>
+          </td>
+          <td class="issue-description-table">
+            <%= snippet.description %>
+          </td>
+          <td class="issue-action-table">
+            <a href="./issues/<%= snippet.id %>/update">Update</a>
+            <a href="./issues/<%= snippet.id %>/delete">Delete</a>
+          </td>
+        </tr>
+      <% } %>
+    <% } else { %>
+      <tr>
+        <td class="text-center text-danger">
+          There are no snippets to display
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

@@ -5,23 +5,20 @@
  * @version 1.0.0
  */
 
- import express from 'express'
- import expressLayouts from 'express-ejs-layouts'
- import logger from 'morgan'
+import express from 'express'
+import expressLayouts from 'express-ejs-layouts'
+import logger from 'morgan'
 //  import helmet from 'helmet'
- import { dirname, join } from 'path'
- import { fileURLToPath } from 'url'
- import { router } from './routes/router.js'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+import { router } from './routes/router.js'
 
- import { createServer } from 'node:http'
- import { Server } from 'socket.io'
+import { createServer } from 'node:http'
+import { Server } from 'socket.io'
 
- console.log("Hello World!")
+console.log("Hello World!")
 
- try {
-  // Connect to MongoDB.
-  // await connectDB()
-
+try {
   // Creates an Express application.
   const app = express()
 
@@ -85,7 +82,7 @@
   //   sessionOptions.cookie.secure = true // serve secure cookies
   // }
 
-  app.use(session(sessionOptions))
+  // app.use(session(sessionOptions))
 
   // Middleware to be executed before the routes.
   app.use((req, res, next) => {
