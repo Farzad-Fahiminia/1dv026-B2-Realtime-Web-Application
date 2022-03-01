@@ -16,7 +16,7 @@ import { router } from './routes/router.js'
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
-console.log("Hello World!")
+console.log('Hello World!')
 
 try {
   // Creates an Express application.

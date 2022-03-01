@@ -16,8 +16,8 @@ const controller = new IssuesController()
 
 router.get('/', (req, res, next) => controller.index(req, res, next))
 
-router.get('/create', (req, res, next) => controller.create(req, res, next))
-router.post('/create', (req, res, next) => controller.createPost(req, res, next))
-
 router.get('/:id/update', (req, res, next) => controller.update(req, res, next))
 router.post('/:id/update', (req, res, next) => controller.updatePost(req, res, next))
+
+router.get('/test', (req, res, next) => controller.test(req, res, next))
+router.post('/test', (req, res, next) => controller.test2(req, res, next))

@@ -17,7 +17,7 @@ const issues = [
 /**
  * Encapsulates a controller.
  */
- export class IssuesController {
+export class IssuesController {
   /**
    * Displays a list of products.
    *
@@ -98,5 +98,13 @@ const issues = [
     } catch (error) {
       next(error)
     }
+  }
+
+  async test (req, res, next) {
+    console.log(req.body)
+  }
+
+  async test2 (req, res, next) {
+    console.log(req.body)
   }
 }
