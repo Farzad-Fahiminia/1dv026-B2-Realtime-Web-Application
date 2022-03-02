@@ -19,5 +19,5 @@ router.get('/', (req, res, next) => controller.index(req, res, next))
 router.get('/:id/update', (req, res, next) => controller.update(req, res, next))
 router.post('/:id/update', (req, res, next) => controller.updatePost(req, res, next))
 
-router.get('/test', (req, res, next) => controller.test(req, res, next))
-router.post('/test', (req, res, next) => controller.test2(req, res, next))
+// router.get('/test', (req, res, next) => controller.test(req, res, next))
+// router.post('/test', (req, res, next) => controller.test2(req, res, next))

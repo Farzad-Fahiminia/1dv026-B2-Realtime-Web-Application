@@ -2,31 +2,30 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Author</th>
-      <th>Description</th>
+      <th>Issue</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    <% if (viewData?.snippets?.length) { %>
-      <% for (const snippet of viewData.snippets) { %>
+    <% if (viewData?.length > 0) { %>
+      <% viewData.forEach(issue => { %>
         <tr>
           <td class="issue-author-table">
-            <%= snippet.author %>
-          </td>
-          <td class="issue-description-table">
-            <%= snippet.description %>
+            <%= issue.title %><br>
+            <%= issue.description %><br>
+            <%= issue.state %><br>
+            <%= issue.author %><br>
+            #<%= issue.id %>
           </td>
           <td class="issue-action-table">
-            <a href="./issues/<%= snippet.id %>/update">Update</a>
-            <a href="./issues/<%= snippet.id %>/delete">Delete</a>
+            <a href="./issues/<%= issue.id %>/update">Update</a>
           </td>
         </tr>
-      <% } %>
+      <% }) %>
     <% } else { %>
       <tr>
         <td class="text-center text-danger">
-          There are no snippets to display
+          There are no issues to display
         </td>
       </tr>
     <% } %>
