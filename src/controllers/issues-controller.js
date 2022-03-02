@@ -5,6 +5,8 @@
  * @version 1.0.0
  */
 
+import fetch from 'node-fetch'
+
 // "Faking" persistent products.
 const issues = [
   { id: 1, name: 'storm kitchen' },
@@ -102,6 +104,14 @@ export class IssuesController {
 
   async test (req, res, next) {
     console.log(req.body)
+    let data = await window.fetch(`https://gitlab.lnu.se/api/v4/projects/${process.env.PROJECT_ID}/issues`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    data = await data.json()
+    console.log(data)
   }
 
   async test2 (req, res, next) {
