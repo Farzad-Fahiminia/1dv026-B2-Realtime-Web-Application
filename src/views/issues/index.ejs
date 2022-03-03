@@ -19,7 +19,11 @@
           </td>
           <td class="issue-action-table">
             <input type="hidden" name="issueStatus" value="<%= issue.state %>">
-            <button type="submit" id="issueSubmit" name="issueId" value="<%= issue?.id %>">Open</button>
+            <% if (issue.state === 'opened') { %>
+              <button type="submit" class="button-close" id="issueSubmit" name="issueId" value="<%= issue?.id %>">Close</button>
+            <% } else { %>
+              <button type="submit" class="button-open" id="issueSubmit" name="issueId" value="<%= issue?.id %>">Open</button>
+            <% } %>
           </td>
         </tr>
       </tbody>

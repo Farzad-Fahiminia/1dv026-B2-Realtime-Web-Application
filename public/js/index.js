@@ -30,12 +30,16 @@ if (issueTemplate) {
  */
 function updateButton (issue) {
   console.log('INNE I UPDATEBUTTON')
-  // console.log(issue)
+  console.log(issue.iid)
 
   const issueId = document.querySelector(`.issues-form[name="${issue.iid}"]`)
-  const button = document.querySelector('#issueSubmit')
+  const button = issueId.querySelector('#issueSubmit')
+
+  console.log(issueId)
+  console.log(button)
 
   if (issue.state === 'closed') {
+    button.style.backgroundColor = 'green'
     button.textContent = 'Open'
   } else if (issue.state === 'opened') {
     button.style.backgroundColor = 'red'
