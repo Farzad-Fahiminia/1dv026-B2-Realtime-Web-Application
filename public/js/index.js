@@ -1,9 +1,9 @@
 // import '../socket.io/socket.io.js'
 
-const taskTemplate = document.querySelector('#task-template')
+const issueTemplate = document.querySelector('#issue-template')
 
 // If taskTemplate is not present on the page, just ignore and do not listen for task messages.
-if (taskTemplate) {
+if (issueTemplate) {
   await import('../socket.io/socket.io.js')
 
   // Create a socket connection using Socket.IO.
@@ -19,42 +19,62 @@ if (taskTemplate) {
     : '/socket.io'
   const socket = window.io.connect('/', { path })
 
-  // Listen for "tasks/create" message from the server.
-  socket.on('tasks/create', (task) => insertTaskRow(task))
+  // Listen for "issue/update" message from the server.
+  socket.on('issue/update', (issue) => updateButton(issue))
 }
 
 /**
- * Inserts a task row at the end of the task table.
+ * Changes the state on open/close button.
  *
- * @param {object} task - The task to add.
+ * @param {object} issue - The specific issue to modify.
  */
-function insertTaskRow (task) {
-  const taskList = document.querySelector('#task-list')
+function updateButton (issue) {
+  console.log('INNE I UPDATEBUTTON')
+  // console.log(issue)
 
-  // Only add a task if it's not already in the list.
-  if (!taskList.querySelector(`[data-id="${task.id}"]`)) {
-    const taskNode = taskTemplate.content.cloneNode(true)
+  const issueId = document.querySelector(`.issues-form[name="${issue.iid}"]`)
+  const button = document.querySelector('#issueSubmit')
 
-    const taskRow = taskNode.querySelector('tr')
-    const doneCheck = taskNode.querySelector('input[type=checkbox]')
-    const descriptionCell = taskNode.querySelector('td:nth-child(2)')
-    const [updateLink, deleteLink] = taskNode.querySelectorAll('a')
-
-    taskRow.setAttribute('data-id', task.id)
-
-    if (task.done) {
-      doneCheck.setAttribute('checked', '')
-      descriptionCell.classList.add('text-muted')
-    } else {
-      doneCheck.removeAttribute('checked')
-      descriptionCell.classList.remove('text-muted')
-    }
-
-    descriptionCell.textContent = task.description
-
-    updateLink.href = `./tasks/${task.id}/update`
-    deleteLink.href = `./tasks/${task.id}/delete`
-
-    taskList.append(taskNode)
+  if (issue.state === 'closed') {
+    button.textContent = 'Open'
+  } else if (issue.state === 'opened') {
+    button.style.backgroundColor = 'red'
+    button.textContent = 'Close'
   }
 }
+
+// /**
+//  * Inserts a task row at the end of the task table.
+//  *
+//  * @param {object} task - The task to add.
+//  */
+// function insertTaskRow (task) {
+//   const taskList = document.querySelector('#task-list')
+
+//   // Only add a task if it's not already in the list.
+//   if (!taskList.querySelector(`[data-id="${task.id}"]`)) {
+//     const taskNode = taskTemplate.content.cloneNode(true)
+
+//     const taskRow = taskNode.querySelector('tr')
+//     const doneCheck = taskNode.querySelector('input[type=checkbox]')
+//     const descriptionCell = taskNode.querySelector('td:nth-child(2)')
+//     const [updateLink, deleteLink] = taskNode.querySelectorAll('a')
+
+//     taskRow.setAttribute('data-id', task.id)
+
+//     if (task.done) {
+//       doneCheck.setAttribute('checked', '')
+//       descriptionCell.classList.add('text-muted')
+//     } else {
+//       doneCheck.removeAttribute('checked')
+//       descriptionCell.classList.remove('text-muted')
+//     }
+
+//     descriptionCell.textContent = task.description
+
+//     updateLink.href = `./tasks/${task.id}/update`
+//     deleteLink.href = `./tasks/${task.id}/delete`
+
+//     taskList.append(taskNode)
+//   }
+// }

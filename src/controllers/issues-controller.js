@@ -50,7 +50,7 @@ export class IssuesController {
         state: issue.state
       }))
 
-      console.log(viewData)
+      // console.log(viewData)
 
       // const viewData = { issues }
       res.render('issues/index', { viewData })
@@ -68,7 +68,7 @@ export class IssuesController {
    */
   async updatePost (req, res, next) {
     console.log('HITTAR VI POST?')
-    console.log(req.body.issueStatus)
+    // console.log(req.body.issueStatus)
 
     const id = req.body.issueId
     let status = req.body.issueStatus
@@ -88,7 +88,18 @@ export class IssuesController {
     })
     data = await data.json()
 
+    // const viewData = data.map(issue => ({
+    //   id: issue.iid,
+    //   state: issue.state
+    // }))
+
     // console.log(data)
+
+    // --------------------------------------------------------------------------
+    // Socket.IO: Send the created task to all subscribers.
+    //
+    res.io.emit('issue/update', data)
+    // --------------------------------------------------------------------------
 
     res.redirect('..')
   }
