@@ -1,28 +1,35 @@
 <h1>Issues</h1>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Issue</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if (viewData?.length > 0) { %>
-      <% viewData.forEach(issue => { %>
+<% if (viewData?.length > 0) { %>
+  <% viewData.forEach(issue => { %>
+  <form class="issues-form" method="post" action="./issues/<%= issue?.id %>/update">
+    <%= console.log(issue.id) %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#<%= issue.id %>. <%= issue.title %></th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
         <tr>
           <td class="issue-author-table">
-            <%= issue.title %><br>
-            <%= issue.description %><br>
-            <%= issue.state %><br>
-            <%= issue.author %><br>
-            #<%= issue.id %>
+            <img class="img-avatar" src="<%= issue.avatar %>" alt="avatar">
+            Description: <%= issue.description %><br>
+            <p class="small">Author: <%= issue.author %><br>
+              State: <%= issue.state %></p>
           </td>
           <td class="issue-action-table">
-            <a href="./issues/<%= issue.id %>/update">Update</a>
+            <input type="hidden" name="issueStatus" value="<%= issue.state %>">
+            <button type="submit" name="issueId" value="<%= issue?.id %>">Open</button>
           </td>
         </tr>
+      </tbody>
+    </table>
+  </form><br>
       <% }) %>
     <% } else { %>
+<table class="table table-striped">
+  <tbody>
       <tr>
         <td class="text-center text-danger">
           There are no issues to display

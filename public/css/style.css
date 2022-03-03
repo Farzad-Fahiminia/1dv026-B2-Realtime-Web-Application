@@ -41,7 +41,7 @@ textarea {
 button, input[type=submit] {
   cursor: pointer;
   padding: 10px 20px;
-  background-color: #111;
+  background-color: green;
   color: #fff;
   margin: 8px 0;
   border: none;
@@ -55,7 +55,7 @@ button:hover, input[type=submit]:hover {
 
 .table-striped {
   border-collapse: collapse;
-  width: 90%;
+  width: 50%;
   background-color: #fff;
   border-radius: 4px;
 }
@@ -71,17 +71,28 @@ button:hover, input[type=submit]:hover {
   border-radius: 4px;
 }
 
-.table-striped tr:hover {
-  background-color: #dceae8;
-  border-radius: 4px;
-}
-
 .table-striped th {
   padding: 15px;
   text-align: left;
-  background-color: #111;
+  /* background-color: #111; */
   border-radius: 4px;
-  color: #fff;
+  font-size: 1.3em;
+  /* color: #fff; */
+}
+
+.small {
+  font-size: 0.8em;
+  color: #9b9b9b;
+}
+
+.img-avatar {
+  display: block;
+  position: relative;
+  float: right;
+}
+
+.img-avatar img {
+  border-radius: 5px;
 }
 
 /* ---------- Header ---------- */

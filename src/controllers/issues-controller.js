@@ -29,7 +29,7 @@ export class IssuesController {
    */
   async index (req, res, next) {
     try {
-      console.log('************ INDEX *************')
+      // console.log('************ INDEX *************')
       let data = await fetch(`https://gitlab.lnu.se/api/v4/projects/${process.env.PROJECT_ID}/issues`, {
         method: 'GET',
         headers: {
@@ -39,11 +39,14 @@ export class IssuesController {
       })
       data = await data.json()
 
+      // console.log(data)
+
       const viewData = data.map(issue => ({
         id: issue.iid,
         title: issue.title,
         description: issue.description,
         author: issue.author.name,
+        avatar: issue.author.avatar_url,
         state: issue.state
       }))
 
@@ -56,77 +59,37 @@ export class IssuesController {
     }
   }
 
-  // /**
-  //  * Displays an issue.
-  //  *
-  //  * @param {object} req - Express request object.
-  //  * @param {object} res - Express response object.
-  //  * @param {Function} next - Express next middleware function.
-  //  */
-  // async show (req, res, next) {
-  //   // Get the first issue that's id equals the parameter id's value.
-  //   const issue = issues
-  //     .filter(issue => issue.id === Number(req.params.id))
-  //     .shift()
+  /**
+   * Updates an issue.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   */
+  async updatePost (req, res, next) {
+    console.log('HITTAR VI POST?')
+    console.log(req.body.issueStatus)
 
-  //   // If no issue is found send a 404 (resource not found).
-  //   if (!issue) {
-  //     const error = new Error('Not Found')
-  //     error.status = 404
+    const id = req.body.issueId
+    let status = req.body.issueStatus
 
-  //     // IMPORTANT! Never throw an exception in an async action handler,
-  //     // always call next!
-  //     next(error)
-  //     return
-  //   }
+    if (status === 'closed') {
+      status = 'reopen'
+    } else {
+      status = 'close'
+    }
 
-  //   // Send response with the wanted product.
-  //   const viewData = { issue }
-  //   res.render('products/show', { viewData })
-  // }
+    let data = await fetch(`https://gitlab.lnu.se/api/v4/projects/${process.env.PROJECT_ID}/issues/${id}?state_event=${status}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + process.env.PRIVATE_TOKEN
+      }
+    })
+    data = await data.json()
 
-  // /**
-  //  * Returns a HTML form for creating a new product.
-  //  *
-  //  * @param {object} req - Express request object.
-  //  * @param {object} res - Express response object.
-  //  * @param {Function} next - Express next middleware function.
-  //  */
-  // async createForm (req, res, next) {
-  //   try {
-  //     res.render('issues/create')
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
+    // console.log(data)
 
-  // /**
-  //  * Creates a new product.
-  //  *
-  //  * @param {object} req - Express request object.
-  //  * @param {object} res - Express response object.
-  //  * @param {Function} next - Express next middleware function.
-  //  */
-  // async create (req, res, next) {
-  //   try {
-  //     // Make the product "persistent" and...
-  //     issues.push({
-  //       id: issues.length + 1,
-  //       name: req.body.name
-  //     })
-
-  //     // ...redirect to the list of products.
-  //     res.redirect('.')
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
-
-  async test (req, res, next) {
-    console.log(req.body)
-  }
-
-  async test2 (req, res, next) {
-    console.log(req.body)
+    res.redirect('..')
   }
 }
