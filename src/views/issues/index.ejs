@@ -5,7 +5,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>#<%= issue.id %>. <%= issue.title %></th>
+          <th class="issue-title">#<%= issue.id %>. <%= issue.title %></th>
           <th>Action</th>
         </tr>
       </thead>
@@ -44,14 +44,32 @@
 
 <%# Socket.IO: Template for the client. The same as above, sort of. %>
 <template id="issue-template">
-  <tr>
-    <td class="text-center text-primary">
-      <input class="form-check-input" type="checkbox" disabled />
-    </td>
-    <td class="w-100"></td>
-    <td class="text-nowrap">
-      <a>Update</a>
-      <a>Delete</a>
-    </td>
-  </tr>
+  <form class="issues-form" name="<%= issue.id %>" method="post" action="./issues/<%= issue?.id %>/update">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="issue-title">#<%= issue.id %>. <%= issue.title %></th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="issue-author-table">
+            <img class="img-avatar" src="<%= issue.avatar %>" alt="avatar">
+            Description: <%= issue.description %><br>
+            <p class="small">Author: <%= issue.author %><br>
+              State: <%= issue.state %></p>
+          </td>
+          <td class="issue-action-table">
+            <input type="hidden" name="issueStatus" value="<%= issue.state %>">
+            <% if (issue.state === 'opened') { %>
+              <button type="submit" class="button-close" id="issueSubmit" name="issueId" value="<%= issue?.id %>">Close</button>
+            <% } else { %>
+              <button type="submit" class="button-open" id="issueSubmit" name="issueId" value="<%= issue?.id %>">Open</button>
+            <% } %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
 </template>

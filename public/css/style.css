@@ -41,7 +41,7 @@ textarea {
 button, input[type=submit] {
   cursor: pointer;
   padding: 10px 20px;
-  background-color: green;
+  /* background-color: green; */
   color: #fff;
   margin: 8px 0;
   border: none;

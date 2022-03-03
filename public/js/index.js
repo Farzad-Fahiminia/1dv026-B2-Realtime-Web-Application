@@ -20,7 +20,7 @@ if (issueTemplate) {
   const socket = window.io.connect('/', { path })
 
   // Listen for "issue/update" message from the server.
-  socket.on('issue/update', (issue) => updateButton(issue))
+  socket.on('issue/update', (issue) => updateIssue(issue))
 }
 
 /**
@@ -28,21 +28,19 @@ if (issueTemplate) {
  *
  * @param {object} issue - The specific issue to modify.
  */
-function updateButton (issue) {
-  console.log('INNE I UPDATEBUTTON')
-  console.log(issue.iid)
-
+function updateIssue (issue) {
+  // console.log(issue)
   const issueId = document.querySelector(`.issues-form[name="${issue.iid}"]`)
+  // console.log(issueId)
   const button = issueId.querySelector('#issueSubmit')
 
-  console.log(issueId)
-  console.log(button)
-
   if (issue.state === 'closed') {
-    button.style.backgroundColor = 'green'
+    // button.style.backgroundColor = 'green'
+    button.setAttribute('class', 'button-open')
     button.textContent = 'Open'
   } else if (issue.state === 'opened') {
-    button.style.backgroundColor = 'red'
+    // button.style.backgroundColor = 'red'
+    button.setAttribute('class', 'button-close')
     button.textContent = 'Close'
   }
 }

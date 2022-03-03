@@ -1,20 +1,11 @@
 /**
- * Module for the SnippetsController.
+ * Module for the IssuesController.
  *
  * @author Farzad Fahiminia <ff222cb@student.lnu.se>
  * @version 1.0.0
  */
 
 import fetch from 'node-fetch'
-
-// "Faking" persistent products.
-// const issues = [
-//   { id: 1, name: 'storm kitchen' },
-//   { id: 2, name: 'cell box' },
-//   { id: 3, name: 'recycled garments' },
-//   { id: 4, name: 'electric bike' },
-//   { id: 5, name: 'VR glasses' }
-// ]
 
 /**
  * Encapsulates a controller.
@@ -68,7 +59,7 @@ export class IssuesController {
    */
   async updatePost (req, res, next) {
     console.log('HITTAR VI POST?')
-    // console.log(req.body.issueStatus)
+    console.log(req.body)
 
     const id = req.body.issueId
     let status = req.body.issueStatus
