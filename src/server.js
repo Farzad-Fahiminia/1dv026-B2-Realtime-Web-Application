@@ -8,11 +8,10 @@
 import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
 import logger from 'morgan'
-//  import helmet from 'helmet'
+import helmet from 'helmet'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 import { router } from './routes/router.js'
-
 import { createServer } from 'node:http'
 import { Server } from 'socket.io'
 
@@ -41,6 +40,17 @@ try {
 
   // Set up a morgan logger using the dev format for log entries.
   app.use(logger('dev'))
+
+  // Adds XSS security to the application.
+  app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'script-src': ["'self'"],
+        'img-src': ['gitlab.lnu.se', '*.gravatar.com']
+      }
+    })
+  )
 
   // View engine setup.
   app.set('view engine', 'ejs')

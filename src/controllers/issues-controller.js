@@ -20,7 +20,6 @@ export class IssuesController {
    */
   async index (req, res, next) {
     try {
-      // console.log('************ INDEX *************')
       let data = await fetch(`https://gitlab.lnu.se/api/v4/projects/${process.env.PROJECT_ID}/issues`, {
         method: 'GET',
         headers: {
@@ -29,8 +28,6 @@ export class IssuesController {
         }
       })
       data = await data.json()
-
-      // console.log(data)
 
       const viewData = data.map(issue => ({
         id: issue.iid,
@@ -41,9 +38,6 @@ export class IssuesController {
         state: issue.state
       }))
 
-      // console.log(viewData)
-
-      // const viewData = { issues }
       res.render('issues/index', { viewData })
     } catch (error) {
       next(error)
@@ -58,9 +52,6 @@ export class IssuesController {
    * @param {Function} next - Express next middleware function.
    */
   async updatePost (req, res, next) {
-    console.log('HITTAR VI POST?')
-    console.log(req.body)
-
     const id = req.body.issueId
     let status = req.body.issueStatus
 
@@ -70,27 +61,13 @@ export class IssuesController {
       status = 'close'
     }
 
-    let data = await fetch(`https://gitlab.lnu.se/api/v4/projects/${process.env.PROJECT_ID}/issues/${id}?state_event=${status}`, {
+    await fetch(`https://gitlab.lnu.se/api/v4/projects/${process.env.PROJECT_ID}/issues/${id}?state_event=${status}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + process.env.PRIVATE_TOKEN
       }
     })
-    data = await data.json()
-
-    // const viewData = data.map(issue => ({
-    //   id: issue.iid,
-    //   state: issue.state
-    // }))
-
-    // console.log(data)
-
-    // // --------------------------------------------------------------------------
-    // // Socket.IO: Send the created task to all subscribers.
-    // //
-    // res.io.emit('issue/update', data)
-    // // --------------------------------------------------------------------------
 
     res.redirect('..')
   }
