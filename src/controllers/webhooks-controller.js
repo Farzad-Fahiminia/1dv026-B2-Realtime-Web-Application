@@ -50,11 +50,16 @@ export class WebhooksController {
         }
         // console.log(issue)
 
+        const isCreated = req.body.changes.updated_at.previous === null
         // It is important to respond quickly!
         res.status(200).end()
 
-        // Put this last because socket communication can take long time.
-        res.io.emit('issue/update', issue)
+        if (isCreated) {
+          // Put this last because socket communication can take long time.
+          res.io.emit('issue/create', issue)
+        } else {
+          res.io.emit('issue/update', issue)
+        }
       }
     } catch (error) {
       const err = new Error('Internal Server Error')

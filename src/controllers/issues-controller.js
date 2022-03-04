@@ -86,11 +86,11 @@ export class IssuesController {
 
     // console.log(data)
 
-    // --------------------------------------------------------------------------
-    // Socket.IO: Send the created task to all subscribers.
-    //
-    res.io.emit('issue/update', data)
-    // --------------------------------------------------------------------------
+    // // --------------------------------------------------------------------------
+    // // Socket.IO: Send the created task to all subscribers.
+    // //
+    // res.io.emit('issue/update', data)
+    // // --------------------------------------------------------------------------
 
     res.redirect('..')
   }

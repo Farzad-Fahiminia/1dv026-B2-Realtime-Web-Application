@@ -21,6 +21,7 @@ if (issueTemplate) {
 
   // Listen for "issue/update" message from the server.
   socket.on('issue/update', (issue) => updateIssue(issue))
+  socket.on('issue/create', (issue) => createIssue(issue))
 }
 
 /**
@@ -31,15 +32,45 @@ if (issueTemplate) {
 function updateIssue (issue) {
   // console.log(issue)
   const issueId = document.querySelector(`.issues-form[name="${issue.iid}"]`)
-  // console.log(issueId)
   const button = issueId.querySelector('#issueSubmit')
 
   if (issue.state === 'closed') {
-    // button.style.backgroundColor = 'green'
     button.setAttribute('class', 'button-open')
     button.textContent = 'Open'
   } else if (issue.state === 'opened') {
-    // button.style.backgroundColor = 'red'
+    button.setAttribute('class', 'button-close')
+    button.textContent = 'Close'
+  }
+}
+
+/**
+ * Creates a new issue through template in index.ejs.
+ *
+ * @param {object} issue - The specific issue to modify.
+ */
+function createIssue (issue) {
+  // console.log(issue)
+  const issueForm = document.querySelector('.issues-form')
+  const title = document.querySelector('.issue-title')
+  const img = document.querySelector('.img-avatar')
+  const description = document.querySelector('.issue-description')
+  const author = document.querySelector('#issue-author')
+  const hidden = document.querySelector('#issueStatus')
+  const button = document.querySelector('#issueSubmit')
+
+  issueForm.setAttribute('name', `${issue.iid}`)
+  issueForm.setAttribute('action', `./issues/${issue.iid}/update`)
+  title.textContent = `#${issue.iid}. ${issue.title}`
+  img.setAttribute('src', `${issue.avatar}`)
+  description.textContent = `${issue.description}`
+  author.textContent = `Author: ${issue.author}, State: ${issue.state}`
+  hidden.setAttribute('value', `${issue.state}`)
+  button.setAttribute('value', `${issue.iid}`)
+
+  if (issue.state === 'closed') {
+    button.setAttribute('class', 'button-open')
+    button.textContent = 'Open'
+  } else if (issue.state === 'opened') {
     button.setAttribute('class', 'button-close')
     button.textContent = 'Close'
   }
