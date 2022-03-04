@@ -1,4 +1,9 @@
-// import '../socket.io/socket.io.js'
+/**
+ * Connecting with socket io and changing/creating issues.
+ *
+ * @author Farzad Fahiminia <ff222cb@student.lnu.se>
+ * @version 1.0.0
+ */
 
 const issueTemplate = document.querySelector('#issue-template')
 
@@ -7,11 +12,6 @@ if (issueTemplate) {
   await import('../socket.io/socket.io.js')
 
   // Create a socket connection using Socket.IO.
-
-  // 👎 BAD PROGRAMMER, NO DONUT!
-  // CAUSE: Does not work with subdirectories.
-  // const socket = window.io()
-
   // 🎉 This should work with any subdirectory.
   const base = document.querySelector('base')
   const path = base
